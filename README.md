@@ -96,18 +96,6 @@ Its design prioritizes **mission safety**, **fault tolerance**, and **modularity
 
 ---
 
-## 🔥 Ignition System
-
-The **communication-based ignition system** enables safe and remote rocket ignition using **LoRa wireless communication**.
-
-The system consists of two units:
-
-- **Launch Control Box (Transmitter)** — Ground-side unit with push-button interface to send the ignition command wirelessly
-- **Ignition Unit (Receiver)** — On-board unit that receives the LoRa command and initiates the ignition sequence
-
-Ignition activates the rocket's propulsion system by initiating the combustion of the propellant, generating the thrust required for ascent.
-
----
 
 ## 🗂️ Project Structure
 
