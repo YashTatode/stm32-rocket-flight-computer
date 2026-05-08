@@ -1,10 +1,11 @@
-# 🚀 STM32 Rocket Flight Computer — Project EKALAVYA
+# PRAGYAN — STM32 Rocket Flight Computer
+## Project EKALAVYA
 
-**PRAGYAN** — Embedded avionics flight computer built on STM32F401CCU6, featuring DPS310 barometric altitude estimation, ICM20948 9-axis IMU motion tracking, ADXL375 high-G sensing, onboard data logging, and autonomous recovery deployment.
+> Embedded avionics flight computer built on **STM32F401CCU6**, featuring barometric altitude estimation, 9-axis IMU motion tracking, high-G sensing, onboard data logging, and autonomous recovery deployment.
 
 ---
 
-## 📋 Overview
+## Overview
 
 **PRAGYAN** is the Electronics Bay (E-Bay) flight computer at the heart of **Project EKALAVYA**. It serves as the central avionics unit, integrating flight sensors, data logging systems, and deployment control logic into a single reliable embedded platform.
 
@@ -12,7 +13,7 @@ Its design prioritizes **mission safety**, **fault tolerance**, and **modularity
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 - Accurate measurement of flight parameters — altitude, pressure, and acceleration
 - Reliable detection of apogee
@@ -21,7 +22,7 @@ Its design prioritizes **mission safety**, **fault tolerance**, and **modularity
 
 ---
 
-## ✨ Features
+## Features
 
 - **Barometric Altitude Estimation** — DPS310 high-resolution pressure sensor for precise altitude tracking during ascent and descent
 - **9-Axis IMU Motion Tracking** — ICM20948 captures rocket orientation, angular velocity, and low-G flight dynamics
@@ -32,20 +33,35 @@ Its design prioritizes **mission safety**, **fault tolerance**, and **modularity
 
 ---
 
-## 🛠️ Hardware Specifications
+## System Requirements
+
+**STM32CubeIDE:**
+Download and install from the official ST website:
+
+    https://www.st.com/en/development-tools/stm32cubeide.html
+
+**ST-Link V2:**
+Required for flashing and debugging the STM32F401CCU6.
+
+**Hardware:**
+The firmware requires the following components for full functionality. Without the deployment circuit and pyro hardware, the system can still be used for sensor data acquisition and logging.
+
+---
+
+## Hardware Specifications
 
 | Component | Specification & Function |
 |-----------|--------------------------|
-| **STM32F401CCU6 Blackpill** | ARM Cortex-M4 based 32-bit microcontroller. Primary flight computer — handles sensor interfacing, real-time data processing, event sequencing, and deployment control. |
-| **DPS310** | High-resolution barometric sensor for atmospheric pressure measurement and precise altitude estimation during ascent and descent phases. |
-| **ICM20948 IMU** | 9-axis inertial measurement unit — captures rocket orientation, angular velocity, and low-G flight dynamics for accurate motion tracking. |
-| **ADXL375 Accelerometer** | High-range accelerometer for measuring extreme acceleration levels during the boost phase; complements IMU data for reliable high-G event detection. |
-| **Micro-SD Card Module** | Non-volatile onboard storage for logging time-stamped altitude, acceleration, and inertial data for post-flight analysis. |
+| **STM32F401CCU6 Blackpill** | ARM Cortex-M4 based 32-bit microcontroller. Handles sensor interfacing, real-time data processing, event sequencing, and deployment control. |
+| **DPS310** | High-resolution barometric sensor for atmospheric pressure measurement and precise altitude estimation. |
+| **ICM20948 IMU** | 9-axis inertial measurement unit — captures rocket orientation, angular velocity, and low-G flight dynamics. |
+| **ADXL375 Accelerometer** | High-range accelerometer for measuring extreme acceleration during boost phase; complements IMU data for reliable high-G event detection. |
+| **Micro-SD Card Module** | Non-volatile onboard storage for logging time-stamped sensor data for post-flight analysis. |
 | **Transistor-Based Deployment Circuit** | Electronic switching interface controlled by the flight computer to activate the parachute deployment mechanism. |
 
 ---
 
-## 📌 MCU Pin Configuration
+## MCU Pin Configuration
 
 | Pin | Function |
 |-----|----------|
@@ -68,7 +84,7 @@ Its design prioritizes **mission safety**, **fault tolerance**, and **modularity
 
 ---
 
-## ⚙️ Peripheral Configuration
+## Peripheral Configuration
 
 | Peripheral | Mode | Purpose |
 |------------|------|---------|
@@ -82,22 +98,39 @@ Its design prioritizes **mission safety**, **fault tolerance**, and **modularity
 
 ---
 
-## 🚦 Flight State Machine
+## Flight State Machine
 
 ```
 [PAD / IDLE] → [POWERED ASCENT] → [COASTING] → [APOGEE] → [DESCENT] → [LANDED]
 ```
 
-- **ADXL375** detects high-G event at motor ignition → transitions to POWERED ASCENT
-- **ICM20948** monitors angular velocity and acceleration → detects motor burnout → COASTING
-- **DPS310** continuously tracks altitude → detects pressure plateau/reversal → **APOGEE**
-- Apogee triggers deployment circuit → parachute ejection → DESCENT
+**State Transitions:**
+
+- **ADXL375** detects high-G event at motor ignition → transitions to `POWERED ASCENT`
+- **ICM20948** monitors angular velocity and acceleration → detects motor burnout → `COASTING`
+- **DPS310** continuously tracks altitude → detects pressure plateau/reversal → `APOGEE`
+- Apogee triggers deployment circuit → parachute ejection → `DESCENT`
 - All state transitions and sensor data are time-stamped and logged to SD card
 
 ---
 
+## Data Logging
 
-## 🗂️ Project Structure
+All flight data is written to a FAT-formatted Micro-SD card via SPI. Logged parameters include:
+
+- Timestamp (ms since boot)
+- Altitude (m) and Pressure (Pa) — from DPS310
+- Temperature (°C) — from DPS310
+- 3-axis acceleration (low-G) — from ICM20948
+- 3-axis acceleration (high-G) — from ADXL375
+- Angular velocity (X/Y/Z) — from ICM20948
+- Flight state / event flags
+
+Files are stored in **CSV format** for easy post-flight analysis with Python, MATLAB, or Excel.
+
+---
+
+## Project Structure
 
 ```
 stm32-rocket-flight-computer/
@@ -116,74 +149,85 @@ stm32-rocket-flight-computer/
 
 ---
 
-## 📊 Data Logging
+## Installation
 
-All flight data is written to a FAT-formatted Micro-SD card via SPI. Logged parameters include:
+### Build and Flash
 
-- Timestamp (ms since boot)
-- Altitude (m) and Pressure (Pa) — from DPS310
-- Temperature (°C)
-- 3-axis acceleration (low-G) — from ICM20948
-- 3-axis acceleration (high-G) — from ADXL375
-- Angular velocity (X/Y/Z) — from ICM20948
-- Flight state / event flags
+**1. Clone the repository:**
 
-Files are stored in CSV format for easy post-flight analysis with Python, MATLAB, or Excel.
+    $ git clone https://github.com/YashTatode/stm32-rocket-flight-computer.git
 
----
+**2. Open in STM32CubeIDE:**
 
-## 🔧 Getting Started
+    File → Open Projects from File System
 
-### Prerequisites
+Navigate to the cloned directory and import.
 
-- [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) (GCC toolchain)
-- ST-Link V2 programmer / debugger
-- STM32F401CCU6 Blackpill board
+**3. Build the project:**
 
-### Build & Flash
+    Ctrl + B
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/YashTatode/stm32-rocket-flight-computer.git
-   ```
-2. Open in **STM32CubeIDE** via `File → Open Projects from File System`.
-3. Build: `Ctrl+B`
-4. Flash via ST-Link: `Run → Debug`
+**4. Flash via ST-Link:**
+
+    Run → Debug
 
 ### Reconfiguring Peripherals
 
-Open `data.ioc` in STM32CubeMX to visually reconfigure pins, clocks, or peripherals, then regenerate HAL initialization code.
+Open `data.ioc` in STM32CubeMX to visually reconfigure pins, clocks, or peripherals. After making changes, regenerate the HAL initialization code and rebuild.
 
 ---
 
-## ⚠️ Safety Notice
+## Testing Your Hardware
 
-This project involves **pyrotechnic recovery systems** and a **remote ignition system**. Always follow local regulations and rocketry safety codes (e.g., NAR, TRA). Never connect pyro channels or the ignition system to live charges during bench testing. Use dummy loads (LEDs or resistors) during development.
+After wiring your sensors and deployment circuit, use the USART2 serial output (baud: 115200) to verify sensor readings before a flight attempt.
 
----
+**Check sensor communication:**
 
-## 🧰 Tech Stack
+Confirm I2C ACK responses from DPS310 (addr: `0x77`), ICM20948 (addr: `0x68`), and ADXL375 (addr: `0x53`) during initialization.
 
-- **Language:** C
-- **Firmware:** STM32 HAL (STM32Cube FW_F4 V1.28.3)
-- **Toolchain:** GCC / STM32CubeIDE
-- **File System:** FatFs middleware
-- **Sensors:** DPS310 (I2C), ICM20948 (I2C), ADXL375 (I2C/SPI)
-- **Wireless:** LoRa (ignition system)
+**Verify SD card logging:**
 
----
+After a test power cycle, remove the SD card and inspect the generated CSV file to confirm all sensor fields are populated correctly.
 
-## 📄 License
+**Test deployment circuit:**
 
-Open source. Feel free to fork, modify, and build upon for your own rocketry projects. Attribution appreciated!
+Use a dummy load (LED or 10Ω resistor) in place of the pyro charge on PA4 / PB12 to verify the transistor switching logic fires at the expected apogee event.
 
 ---
 
-## 🙋 Author
+## Tech Stack
 
-**Yash Tatode**  
-[GitHub Profile](https://github.com/YashTatode)
+| Category | Details |
+|----------|---------|
+| **Language** | C |
+| **Firmware** | STM32 HAL (STM32Cube FW_F4 V1.28.3) |
+| **Toolchain** | GCC / STM32CubeIDE |
+| **File System** | FatFs middleware |
+| **Sensors** | DPS310 (I2C), ICM20948 (I2C), ADXL375 (I2C) |
+| **Wireless** | LoRa (ignition system) |
 
 ---
 
-*Built for Project EKALAVYA — pushing the boundaries of amateur rocketry avionics. 🚀*
+## Safety Notice
+
+This project involves **pyrotechnic recovery systems** and a **remote ignition system**. Always follow local regulations and rocketry safety codes (e.g., NAR, TRA).
+
+> **Never connect pyro channels or the ignition system to live charges during bench testing.**
+> Use dummy loads (LEDs or resistors) during all development and verification work.
+
+---
+
+## License
+
+Open source. Feel free to fork, modify, and build upon for your own rocketry projects. Attribution appreciated.
+
+---
+
+## Author
+
+**Yash Tatode**
+[github.com/YashTatode](https://github.com/YashTatode)
+
+---
+
+*Built for Project EKALAVYA — pushing the boundaries of amateur rocketry avionics.*
