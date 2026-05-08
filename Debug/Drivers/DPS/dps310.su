@@ -1,0 +1,11 @@
+../Drivers/DPS/dps310.c:40:26:DPS310_WriteReg	32	static
+../Drivers/DPS/dps310.c:45:26:DPS310_ReadRegs	48	static
+../Drivers/DPS/dps310.c:50:16:twos_complement	16	static
+../Drivers/DPS/dps310.c:58:22:DPS310_ReadCalibrationCoefficients	72	static
+../Drivers/DPS/dps310.c:108:13:DPS310_GetScaleFactors	16	static
+../Drivers/DPS/dps310.c:122:15:DPS310_InitCustom	40	static
+../Drivers/DPS/dps310.c:231:15:DPS310_Init	40	static
+../Drivers/DPS/dps310.c:242:15:DPS310_ReadTemperaturePressure	72	static
+../Drivers/DPS/dps310.c:324:7:DPS310_CalculateAltitude	16	static
+../Drivers/DPS/dps310.c:332:6:DPS310_GetStatistics	32	static
+../Drivers/DPS/dps310.c:348:6:DPS310_ResetStatistics	16	static
