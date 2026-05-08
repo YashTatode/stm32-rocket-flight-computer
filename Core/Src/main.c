@@ -2,38 +2,7 @@
  * main.c — Rocket Flight Computer
  *
  * Author  : Yash Tatode
- * Version : v6.1 — All fixes applied including gyration Y-axis + fabsf() for all axes
  *
- * ════════════════════════════════════════════════════════════════
- * HARDWARE
- * ════════════════════════════════════════════════════════════════
- *   ADXL375   ±200 g accel         I2C3  PC9=SDA  PA8=SCL
- *   ICM20948  6-axis IMU           I2C1  PB7=SDA  PB6=SCL
- *   DPS310    Baro / Temp          I2C1  (shared with ICM)
- *   SD card   SPI1                 PA4=CS PA5=SCK PA6=MISO PA7=MOSI
- *   UART      debug 115200 baud    PA2=TX
- *   PC13      Pyro — Drogue / Gyration-1
- *   PC14      Pyro — Gyration-2
- *   PC15      Pyro — Line cutter
- *   PA0       SD status LED
- *   PB9       Buzzer
- *
- * ════════════════════════════════════════════════════════════════
- * FIXES vs v6.0
- * ════════════════════════════════════════════════════════════════
- *  FIX-GY1  Check_Gyration() now includes |icm_ay| in the accel band check.
- *           Handles Z→Y tilt (gravity shifts from az into ay) which v6.0 missed.
- *
- *  FIX-GY2  All three axes use fabsf() so negative readings (e.g. -9.3 m/s²)
- *           are treated as positive — same magnitude, opposite tilt direction.
- *
- *  FIX-GY3  g_icm_ay global added and assigned in the main loop, so Y-axis
- *           accel is available to Check_Gyration() and is logged to SD.
- *
- *  FIX-SD1  SD flight CSV header and SD_WriteFlight() now include icm_ay column
- *           so post-flight analysis of Y-axis tilt is possible.
- *
- * All v6.0 fixes (FIX 1–12) are retained unchanged.
 */
 
 #include "main.h"
