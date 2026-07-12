@@ -1,8 +1,21 @@
-# PRAGYAN — STM32 Rocket Flight Computer
-## Project EKALAVYA
+<div align="center">
 
-> Embedded avionics flight computer built on **STM32F401CCU6**, featuring barometric altitude estimation, 9-axis IMU motion tracking, high-G sensing, onboard data logging, and autonomous recovery deployment.
+# 🚀 PRAGYAN – STM32 Rocket Flight Computer
 
+### Project EKALAVYA
+
+**> Embedded avionics flight computer built on **STM32F401CCU6**, featuring barometric altitude estimation, 9-axis IMU motion tracking, high-G sensing, onboard data logging, and autonomous recovery deployment.**
+
+<br>
+
+![STM32](https://img.shields.io/badge/STM32-BlackPill%20F401CCU6-03234B?style=for-the-badge&logo=stmicroelectronics&logoColor=white)
+![Embedded C](https://img.shields.io/badge/Embedded%20C-Firmware-00599C?style=for-the-badge&logo=c&logoColor=white)
+![STM32CubeIDE](https://img.shields.io/badge/STM32CubeIDE-Development-0C5DA5?style=for-the-badge)
+![Flight Computer](https://img.shields.io/badge/Rocket-Flight%20Computer-E53935?style=for-the-badge)
+![Data Logging](https://img.shields.io/badge/MicroSD-Data%20Logging-2E7D32?style=for-the-badge)
+![LoRa](https://img.shields.io/badge/LoRa-Wireless%20Communication-8E24AA?style=for-the-badge)
+
+</div>
 ---
 
 ## Overview
