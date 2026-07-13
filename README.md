@@ -13,7 +13,7 @@
 ![STM32CubeIDE](https://img.shields.io/badge/STM32CubeIDE-Development-0C5DA5?style=for-the-badge)
 ![Flight Computer](https://img.shields.io/badge/Rocket-Flight%20Computer-E53935?style=for-the-badge)
 ![Data Logging](https://img.shields.io/badge/MicroSD-Data%20Logging-2E7D32?style=for-the-badge)
-![LoRa](https://img.shields.io/badge/LoRa-Wireless%20Communication-8E24AA?style=for-the-badge)
+
 
 </div>
 ---
